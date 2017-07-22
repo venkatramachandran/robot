@@ -27,6 +27,10 @@ var testData = []testCase{
 	{[]string{"PLACE 0, 0, NORTH", "LEFT"}, models.Position{X: 0, Y: 0}, models.WEST},
 	//sample input 3 and output given in the problem
 	{[]string{"PLACE 1, 2, EAST", "MOVE", "MOVE", "LEFT", "MOVE"}, models.Position{X: 3, Y: 3}, models.NORTH},
+	//make sure the robot does not fall down
+	{[]string{"PLACE 3,2, EAST", "MOVE", "MOVE", "MOVE", "LEFT", "MOVE"}, models.Position{X: 4, Y: 3}, models.NORTH},
+	//another test to make sure the robot does not fall down
+	{[]string{"PLACE 0,0, NORTH", "MOVE", "MOVE", "MOVE", "MOVE", "RIGHT", "MOVE", "MOVE", "MOVE", "MOVE", "MOVE", "LEFT"}, models.Position{X: 4, Y: 4}, models.NORTH},
 }
 
 func TestRobot(t *testing.T) {
