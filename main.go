@@ -26,8 +26,10 @@ func main() {
 
 	for scanner.Scan() {
 		command, err := commands.From(scanner.Text())
-		if err == nil {
-			robot.Execute(command)
+		if err != nil {
+			log.Printf("Unable to understand command : %s\n", err)
+			continue
 		}
+		command.Execute(robot)
 	}
 }

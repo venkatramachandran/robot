@@ -15,9 +15,18 @@ type testCase struct {
 }
 
 var testData = []testCase{
+	//place first and move
 	{[]string{"PLACE 0,0,EAST", "MOVE", "LEFT", "MOVE", "MOVE", "LEFT"}, models.Position{X: 1, Y: 2}, models.WEST},
+	//place first and just turn
 	{[]string{"PLACE 0,0,EAST", "RIGHT", "RIGHT"}, models.Position{X: 0, Y: 0}, models.WEST},
+	//try moves before placing
 	{[]string{"MOVE", "MOVE", "LEFT", "PLACE 0,0,WEST", "LEFT", "LEFT"}, models.Position{X: 0, Y: 0}, models.EAST},
+	//sample input 1 and output given in the problem
+	{[]string{"PLACE 0, 0, NORTH", "MOVE"}, models.Position{X: 0, Y: 1}, models.NORTH},
+	//sample input 2 and output given in the problem
+	{[]string{"PLACE 0, 0, NORTH", "LEFT"}, models.Position{X: 0, Y: 0}, models.WEST},
+	//sample input 3 and output given in the problem
+	{[]string{"PLACE 1, 2, EAST", "MOVE", "MOVE", "LEFT", "MOVE"}, models.Position{X: 3, Y: 3}, models.NORTH},
 }
 
 func TestRobot(t *testing.T) {
@@ -25,7 +34,7 @@ func TestRobot(t *testing.T) {
 		r := objects.NewRobot(5, 5)
 		for _, c := range data.Input {
 			cmd, _ := commands.From(c)
-			r.Execute(cmd)
+			cmd.Execute(r)
 		}
 		if r.Position.X != data.EndPosition.X || r.Position.Y != data.EndPosition.Y || r.Direction != data.EndDirection {
 			t.Fatalf("test case %d failed! Expected Position: %d, %d, %s. Got %d, %d, %s", i,

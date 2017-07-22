@@ -1,19 +1,22 @@
 package commands
 
-import "fmt"
-import "github.com/venkatramachandran/robot/models"
+import (
+	"fmt"
+
+	"github.com/venkatramachandran/robot/models"
+	"github.com/venkatramachandran/robot/objects"
+)
 
 //Place is a command which places the robot in a location and sets its direction
-type Place struct {
+type place struct {
 	models.Position
 	models.Direction
 }
 
-//Type returns the command type
-func (p Place) Type() commandType {
-	return PLACE
+func (p place) Execute(r *objects.Robot) {
+	r.SetPosition(p.Position, p.Direction)
 }
 
-func (p Place) String() string {
+func (p place) String() string {
 	return fmt.Sprintf("PLACE %d, %d, %s", p.Position.X, p.Position.Y, p.Direction.String())
 }

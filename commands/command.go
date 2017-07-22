@@ -6,22 +6,13 @@ import (
 
 	"github.com/venkatramachandran/robot/errors"
 	"github.com/venkatramachandran/robot/models"
-)
-
-type commandType int
-
-//Command Type Constants
-const (
-	PLACE commandType = iota
-	MOVE
-	LEFT
-	RIGHT
-	REPORT
+	"github.com/venkatramachandran/robot/objects"
 )
 
 //Command is a command that a robot can understand
 type Command interface {
-	Type() commandType
+	//Execute executes the command on the robot
+	Execute(r *objects.Robot)
 }
 
 //From creates a Command object from a string
@@ -55,7 +46,7 @@ func From(s string) (Command, error) {
 		if err != nil {
 			return nil, errors.InvalidCommandError{Command: s}
 		}
-		return Place{Position: models.Position{X: x, Y: y}, Direction: dir}, nil
+		return place{Position: models.Position{X: x, Y: y}, Direction: dir}, nil
 	}
 	return nil, errors.InvalidCommandError{Command: s}
 }

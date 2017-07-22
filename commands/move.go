@@ -1,10 +1,12 @@
 package commands
 
+import "github.com/venkatramachandran/robot/objects"
+
 type move struct {
 }
 
-func (m move) Type() commandType {
-	return MOVE
+func (m move) Execute(r *objects.Robot) {
+	r.MoveForward()
 }
 
 func (m move) String() string {

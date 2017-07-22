@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/venkatramachandran/robot/commands"
 	"github.com/venkatramachandran/robot/models"
 )
 
@@ -19,24 +18,6 @@ func (r Robot) isPlaced() bool {
 	return !(r.Position.X == -1 || r.Position.Y == -1)
 }
 
-//Execute a command object on the robot
-func (r *Robot) Execute(c commands.Command) {
-	switch c.Type() {
-	case commands.REPORT:
-		r.report()
-	case commands.MOVE:
-		r.moveForward()
-	case commands.LEFT:
-		r.turnLeft()
-	case commands.RIGHT:
-		r.turnRight()
-	case commands.PLACE:
-		if p, ok := c.(commands.Place); ok {
-			r.setPosition(p.Position, p.Direction)
-		}
-	}
-}
-
 //NewRobot creates a new Robot
 func NewRobot(xSize, ySize int) *Robot {
 	return &Robot{Position: models.Position{X: -1, Y: -1},
@@ -44,7 +25,8 @@ func NewRobot(xSize, ySize int) *Robot {
 		board:     board{xSize: xSize, ySize: ySize}}
 }
 
-func (r *Robot) moveForward() {
+//MoveForward moves the robot one step forward in the direction it is facing
+func (r *Robot) MoveForward() {
 	//move forward one step in the current direction
 	//if it makes the robot exceed the limits, ignore
 	if !r.isPlaced() {
@@ -71,7 +53,8 @@ func (r *Robot) moveForward() {
 	}
 }
 
-func (r *Robot) turnLeft() {
+//TurnLeft makes the robot turn to its left
+func (r *Robot) TurnLeft() {
 	//move 90 degrees to the left
 	if !r.isPlaced() {
 		return
@@ -89,7 +72,8 @@ func (r *Robot) turnLeft() {
 	}
 }
 
-func (r *Robot) turnRight() {
+//TurnRight makes the robot turn to its right
+func (r *Robot) TurnRight() {
 	//move 90 degrees to the left
 
 	if !r.isPlaced() {
@@ -107,7 +91,8 @@ func (r *Robot) turnRight() {
 	}
 }
 
-func (r *Robot) setPosition(p models.Position, d models.Direction) {
+//SetPosition sets the initial position and direction for the robot
+func (r *Robot) SetPosition(p models.Position, d models.Direction) {
 	if r.board.IsValidPos(p.X, p.X) {
 		r.Position.X = p.X
 		r.Position.Y = p.Y
@@ -115,7 +100,8 @@ func (r *Robot) setPosition(p models.Position, d models.Direction) {
 	}
 }
 
-func (r Robot) report() {
+//Report prints the current position and direction of the robot
+func (r Robot) Report() {
 	if !r.isPlaced() {
 		return
 	}
