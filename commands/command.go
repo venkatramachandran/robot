@@ -44,7 +44,7 @@ func From(s string) (Command, error) {
 		}
 		dir, err := models.DirectionFrom(strings.TrimSpace(posAndDir[2]))
 		if err != nil {
-			return nil, errors.InvalidCommandError{Command: s}
+			return nil, err
 		}
 		return place{Position: models.Position{X: x, Y: y}, Direction: dir}, nil
 	}

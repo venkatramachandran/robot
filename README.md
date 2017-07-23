@@ -33,5 +33,5 @@ See `example.txt` for a sample input file.
 
 # Running Tests
 To run the tests, run
-```go test```
+```go test ./...```
 from `$GOPATH/src/github.com/venkatramachandran/robot`
